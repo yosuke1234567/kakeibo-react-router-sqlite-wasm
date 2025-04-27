@@ -1,15 +1,48 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
+  --font-sans: ui-sans-serif, system-ui, sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
 html,
 body {
-  @apply bg-white dark:bg-gray-950;
+  @apply bg-radial-[at_25%_25%] from-indigo-950/20 to-teal-900/20 bg-gray-900 text-white;
+  color-scheme: dark;
 
-  @media (prefers-color-scheme: dark) {
-    color-scheme: dark;
+}
+
+body {
+  min-height: 100svh;
+}
+
+input:where(:not([type="radio"], [type="checkbox"], [type="range"])), textarea, select {
+  @apply block w-full bg-gray-50/5 px-3 py-1.5 border rounded-md border-gray-600 outline-offset-2 focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-teal-300/75;
+}
+
+option {
+  @apply bg-gray-900
+}
+
+select {
+  appearance: none;
+  background-repeat: no-repeat;
+  background-position: right 0.6em center;
+  background-size: 1.5em;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>');
+}
+
+label {
+  &+input, &+textarea, &+select {
+    @apply mt-1;
   }
+}
+
+button, [type="button"], [type="submit"] {
+  @apply px-4 py-2 bg-teal-500/44 text-white font-semibold rounded-md shadow-sm hover:bg-teal-500/32;
+  cursor: pointer;
+}
+
+input::-webkit-calendar-picker-indicator:focus {
+  @apply outline-2 outline-offset-2 outline-solid outline-teal-300/75 rounded-sm;
 }

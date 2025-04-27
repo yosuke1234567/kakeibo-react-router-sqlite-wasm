@@ -2,6 +2,7 @@ import {
   isRouteErrorResponse,
   Links,
   Meta,
+  NavLink,
   Outlet,
   Scripts,
   ScrollRestoration,
@@ -11,21 +12,12 @@ import type { Route } from "./+types/root";
 import "./app.css";
 
 export const links: Route.LinksFunction = () => [
-  { rel: "preconnect", href: "https://fonts.googleapis.com" },
-  {
-    rel: "preconnect",
-    href: "https://fonts.gstatic.com",
-    crossOrigin: "anonymous",
-  },
-  {
-    rel: "stylesheet",
-    href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
-  },
+
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="ja">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -33,7 +25,25 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        {children}
+        <div className="bg-teal-950/20 min-h-screen">
+          <div className="p-4 max-w-md mx-auto">
+            {children}
+            <nav className="fixed bottom-0 flex gap-4 align-center justify-center p-4">
+              <NavLink to="/" end className={({isActive}) => (isActive ? 'text-teal-300' : '') + " p-2 rounded-lg"}>
+                ホーム
+              </NavLink>
+              <NavLink to="/new" className={({isActive}) => (isActive ? 'text-teal-300' : '') + " p-2 rounded-lg"}>
+                新規作成
+              </NavLink>
+              <NavLink to="/stats" className={({isActive}) => (isActive ? 'text-teal-300' : '') + " p-2 rounded-lg"}>
+                統計
+              </NavLink>
+              <NavLink to="/config" className={({isActive}) => (isActive ? 'text-teal-300' : '') + " p-2 rounded-lg"}>
+                設定
+              </NavLink>
+            </nav>
+          </div>
+        </div>
         <ScrollRestoration />
         <Scripts />
       </body>
@@ -62,14 +72,16 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   }
 
   return (
-    <main className="pt-16 p-4 container mx-auto">
-      <h1>{message}</h1>
-      <p>{details}</p>
-      {stack && (
-        <pre className="w-full p-4 overflow-x-auto">
-          <code>{stack}</code>
-        </pre>
-      )}
+    <main className="fixed inset-0 py-16 px-4 flex flex-col items-center justify-center bg-[#0004]">
+      <div className="max-w-full bg-white p-4 rounded-lg shadow-md">
+        <h1>{message}</h1>
+        <p>{details}</p>
+        {stack && (
+          <pre className="w-full p-4 overflow-x-auto">
+            <code>{stack}</code>
+          </pre>
+        )}
+      </div>
     </main>
   );
 }
